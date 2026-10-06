@@ -1,0 +1,64 @@
+const ROLES = Object.freeze({
+  ADMIN: 'ADMIN',
+  WORKER: 'WORKER',
+});
+
+const JOB_STATUS = Object.freeze({
+  PENDING: 'PENDING',
+  ASSIGNED: 'ASSIGNED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+});
+
+const JOB_PRIORITY = Object.freeze({
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT',
+});
+
+const ALLOWED_STATUS_TRANSITIONS = Object.freeze({
+  [JOB_STATUS.PENDING]: [JOB_STATUS.ASSIGNED, JOB_STATUS.CANCELLED],
+  [JOB_STATUS.ASSIGNED]: [JOB_STATUS.IN_PROGRESS, JOB_STATUS.CANCELLED],
+  [JOB_STATUS.IN_PROGRESS]: [JOB_STATUS.COMPLETED, JOB_STATUS.CANCELLED],
+  [JOB_STATUS.COMPLETED]: [],
+  [JOB_STATUS.CANCELLED]: [],
+});
+
+const WORKER_ALLOWED_TRANSITIONS = Object.freeze({
+  [JOB_STATUS.ASSIGNED]: [JOB_STATUS.IN_PROGRESS],
+  [JOB_STATUS.IN_PROGRESS]: [JOB_STATUS.COMPLETED],
+});
+
+const ALLOWED_JOB_SORT_FIELDS = Object.freeze([
+  'id',
+  'title',
+  'customer_name',
+  'priority',
+  'status',
+  'created_at',
+  'updated_at',
+]);
+
+const ALLOWED_SORT_ORDERS = Object.freeze(['ASC', 'DESC']);
+
+const ALLOWED_IMAGE_MIME_TYPES = Object.freeze([
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+]);
+
+const MAX_JOB_IMAGES = 5;
+
+module.exports = {
+  ROLES,
+  JOB_STATUS,
+  JOB_PRIORITY,
+  ALLOWED_STATUS_TRANSITIONS,
+  WORKER_ALLOWED_TRANSITIONS,
+  ALLOWED_JOB_SORT_FIELDS,
+  ALLOWED_SORT_ORDERS,
+  ALLOWED_IMAGE_MIME_TYPES,
+  MAX_JOB_IMAGES,
+};
